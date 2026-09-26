@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANAJEMEN 11 SIBERMU - PJJ Luar Negeri</title>
+    
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            900: '#060d17',
+                            800: '#0b192c',
+                            700: '#1e293b',
+                            600: '#334155',
+                            light: '#00b4d8',
+                            glow: '#00e5ff'
+                        },
+                        muhammadiyah: {
+                            DEFAULT: '#059669',
+                            dark: '#047857',
+                            light: '#10b981',
+                            accent: '#34d399'
+                        },
+                        gold: {
+                            DEFAULT: '#f59e0b',
+                            light: '#fbbf24',
+                            dark: '#d97706'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS (inlined so the page works standalone / responsively without assets/css/style.css) -->
+    <style>
+        html { scroll-padding-top: 90px; }
+        body { overflow-x: hidden; }
+        img, svg, canvas, video { max-width: 100%; }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #060d17; }
+        ::-webkit-scrollbar-thumb { background: #00b4d8; border-radius: 9999px; }
+
+        .glass-card {
+            background: rgba(11, 25, 44, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-hover { transition: transform .3s ease, box-shadow .3s ease; }
+        .glass-card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -20px rgba(0, 180, 216, 0.35);
+        }
+
+        .bg-grid-pattern {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .bg-dots-dark {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 22px 22px;
+        }
+        .text-gradient-cyan {
+            background: linear-gradient(90deg, #00e5ff, #10b981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @keyframes pulseSlow { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
+        .animate-pulse-slow { animation: pulseSlow 3s ease-in-out infinite; }
+
+        @keyframes fadeInModal { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+        .animate-fade-in { animation: fadeInModal .25s ease-out; }
+
+        #navbar.nav-scrolled {
+            background: rgba(6, 13, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Prevent long numeric/label stat from overflowing its card on narrow phones */
+        .stat-value { word-break: break-word; }
+
+        @media (max-width: 360px) {
+            .stat-value { font-size: 1.25rem; line-height: 1.75rem; }
+        }
+    </style>
+</head>
+<body class="bg-cyber-900 text-slate-100 font-sans antialiased selection:bg-cyber-light selection:text-cyber-900 overflow-x-hidden">
+
+    <!-- NAVIGATION BAR -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-4 sm:px-8 border-b border-white/5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-muhammadiyah-dark to-cyber-light flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-cyber-light/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid font-bold">M11</i>
+                </div>
+                <div>
+                    <span class="block text-base sm:text-lg font-extrabold tracking-wide sm:tracking-wider text-white whitespace-nowrap group-hover:text-cyber-light transition-colors">
+                        SIBERMU <span class="text-muhammadiyah-accent">M11</span>
+                    </span>
+                    <span class="block text-[9px] sm:text-[10px] text-slate-400 font-medium -mt-1 tracking-widest whitespace-nowrap">PJJ LUAR NEGERI</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#tentang" class="hover:text-cyber-light transition-colors py-1">Tentang</a>
+                <a href="#visi-misi" class="hover:text-cyber-light transition-colors py-1">Visi & Misi</a>
+                <a href="#nilai" class="hover:text-cyber-light transition-colors py-1">Nilai S.I.B.E.R</a>
+                <a href="#demografi" class="hover:text-cyber-light transition-colors py-1">Profil Anggota</a>
+                <a href="#kanal" class="hover:text-cyber-light transition-colors py-1">Kanal Resmi</a>
+            </div>
+
+            <!-- CTA Button desktop -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://lms.sibermu.ac.id" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-muhammadiyah to-cyber-light text-white font-semibold text-sm shadow-md hover:shadow-cyan-500/20 hover:opacity-95 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>LMS SIBERMU</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" class="lg:hidden text-slate-300 hover:text-white p-2 focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden mt-4 pt-4 border-t border-slate-800/80 px-4 pb-4 space-y-3 bg-cyber-800/95 backdrop-blur-xl rounded-2xl shadow-2xl">
+            <a href="#tentang" class="block py-2 text-slate-300 hover:text-cyber-light">Tentang</a>
+            <a href="#visi-misi" class="block py-2 text-slate-300 hover:text-cyber-light">Visi & Misi</a>
+            <a href="#nilai" class="block py-2 text-slate-300 hover:text-cyber-light">Nilai S.I.B.E.R</a>
+            <a href="#demografi" class="block py-2 text-slate-300 hover:text-cyber-light">Profil Anggota</a>
+            <a href="#kanal" class="block py-2 text-slate-300 hover:text-cyber-light">Kanal Resmi</a>
+            <div class="pt-2">
+                <a href="https://lms.sibermu.ac.id" target="_blank" rel="noopener" class="w-full text-center block px-5 py-2.5 rounded-xl bg-gradient-to-r from-muhammadiyah to-cyber-light text-white font-semibold text-sm">
+                    <i class="fa-solid fa-graduation-cap mr-2"></i>LMS SIBERMU
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden bg-gradient-to-b from-cyber-900 via-cyber-800 to-cyber-900 bg-grid-pattern">
+        <!-- Interactive Particle Canvas -->
+        <canvas id="particleCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+
+        <!-- World Map SVG Background Overlay -->
+        <div class="absolute inset-0 opacity-15 pointer-events-none flex items-center justify-center overflow-hidden">
+            <svg class="w-full max-w-7xl h-auto text-cyber-light" fill="currentColor" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Simplified Dots Map Pattern Simulation -->
+                <g fill="currentColor" opacity="0.6">
+                    <circle cx="200" cy="150" r="3" /><circle cx="220" cy="140" r="2" /><circle cx="250" cy="160" r="3" /><circle cx="280" cy="180" r="4" /><circle cx="300" cy="200" r="3" />
+                    <circle cx="450" cy="120" r="4" /><circle cx="480" cy="150" r="3" /><circle cx="500" cy="180" r="5" /><circle cx="520" cy="220" r="3" /><circle cx="550" cy="160" r="4" />
+                    <circle cx="650" cy="140" r="3" /><circle cx="700" cy="160" r="4" /><circle cx="750" cy="200" r="5" /><circle cx="800" cy="220" r="3" /><circle cx="850" cy="180" r="4" />
+                    <circle cx="320" cy="320" r="4" /><circle cx="350" cy="350" r="3" /><circle cx="380" cy="380" r="2" />
+                    <circle cx="720" cy="320" r="4" /><circle cx="750" cy="340" r="3" /><circle cx="780" cy="310" r="5" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Badge Sub-header -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-cyber-light/30 text-cyber-light text-xs sm:text-sm font-semibold tracking-wide mb-6 animate-pulse-slow">
+                <span class="w-2 h-2 rounded-full bg-muhammadiyah-accent animate-ping"></span>
+                <i class="fa-solid fa-earth-americas text-gold-light"></i>
+                <span>Komunitas Akademik Lintas Negara</span>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                MANAJEMEN 11 SIBERMU<br>
+                <span class="text-gradient-cyan">PJJ LUAR NEGERI</span>
+            </h1>
+
+            <!-- Tagline -->
+            <p class="text-lg sm:text-2xl font-bold italic text-gold-light max-w-3xl mx-auto mb-6">
+                "Global Vision, Unlimited Boundaries, Muhammadiyah Values."
+            </p>
+
+            <!-- Sub-headline description -->
+            <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+                Wadah pembelajaran mandiri, profesional, dan berdaya saing global yang mengintegrasikan ilmu manajemen modern dengan nilai-nilai Keislaman dan Kemuhammadiyahan tanpa terhalang batas geografis.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="#visi-misi" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyber-light to-muhammadiyah text-white font-bold text-base shadow-lg shadow-cyber-light/20 hover:shadow-cyan-500/40 hover:scale-105 transition-all">
+                    Jelajahi Profil & Visi <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                </a>
+                <a href="#kanal" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-white hover:bg-white/10 font-semibold text-base border border-slate-700 hover:border-cyber-light transition-all">
+                    <i class="fa-solid fa-comments mr-2 text-muhammadiyah-accent"></i> Hubungi / Komunitas
+                </a>
+            </div>
+
+            <!-- Statistics Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-8 border-t border-slate-800/80">
+                <div class="glass-card p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+                    <div class="stat-value text-2xl sm:text-4xl font-extrabold text-cyber-light mb-1 font-mono">
+                        <span class="counter" data-target="100">0</span>%
+                    </div>
+                    <div class="text-xs sm:text-sm text-slate-400 font-medium">Fully Online / PJJ</div>
+                </div>
+                <div class="glass-card p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+                    <div class="stat-value text-2xl sm:text-4xl font-extrabold text-gold-light mb-1 font-mono">
+                        <span class="counter" data-target="15">0</span>+
+                    </div>
+                    <div class="text-xs sm:text-sm text-slate-400 font-medium">Negara Lintas Dunia</div>
+                </div>
+                <div class="glass-card p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+                    <div class="stat-value text-lg sm:text-4xl font-extrabold text-muhammadiyah-accent mb-1 font-mono">
+                        Angkatan <span class="counter" data-target="11">0</span>
+                    </div>
+                    <div class="text-xs sm:text-sm text-slate-400 font-medium">Program S1 Manajemen</div>
+                </div>
+                <div class="glass-card p-4 sm:p-5 rounded-2xl border border-white/5 text-center">
+                    <div class="stat-value text-2xl sm:text-4xl font-extrabold text-white mb-1 font-mono">
+                        24/7
+                    </div>
+                    <div class="text-xs sm:text-sm text-slate-400 font-medium">Akses LMS & Komunitas</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE IDENTITY / TENTANG SECTION -->
+    <section id="tentang" class="py-20 relative bg-cyber-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-cyber-light font-bold mb-2">Identitas Utama</h2>
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">Mengenal Manajemen 11 SIBERMU</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-cyber-light to-muhammadiyah mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <!-- Information Card List -->
+                <div class="space-y-4">
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-cyber-light flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyber-light/10 text-cyber-light flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-university"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Institusi Pembina</h4>
+                            <p class="text-lg font-bold text-white">Universitas Siber Muhammadiyah (SIBERMU)</p>
+                            <p class="text-xs text-slate-400 mt-1">Perguruan tinggi berbasis Cyber University terdepan dengan semangat persyarikatan.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-muhammadiyah flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-muhammadiyah/10 text-muhammadiyah-accent flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Program Studi & Angkatan</h4>
+                            <p class="text-lg font-bold text-white">S1 Manajemen — Angkatan 11</p>
+                            <p class="text-xs text-slate-400 mt-1">Dirancang khusus untuk membekali calon pemimpin dengan keahlian manajerial global.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-gold flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold-light flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-laptop-house"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Mode Pembelajaran</h4>
+                            <p class="text-lg font-bold text-white">Fully Online / Distance Learning (PJJ)</p>
+                            <p class="text-xs text-slate-400 mt-1">Fleksibilitas tinggi tanpa membatasi ruang, waktu, dan aktivitas profesional di luar negeri.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Graphic Display -->
+                <div class="relative glass-card p-8 rounded-3xl border border-white/10 bg-gradient-to-br from-cyber-800 to-cyber-900 overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-cyber-light/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -left-10 -top-10 w-48 h-48 bg-muhammadiyah/10 rounded-full blur-3xl"></div>
+                    
+                    <h4 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-compass text-gold-light"></i> Karakteristik Pembelajar
+                    </h4>
+                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                        Mahasiswa kelas ini merupakan kombinasi dinamis dari para profesional, pekerja migran, dan pembelajar mandiri yang berdomisili di berbagai belahan dunia.
+                    </p>
+
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-muhammadiyah-accent text-base"></i>
+                            <span>Komitmen tinggi terhadap *time management* lintas zona waktu.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-muhammadiyah-accent text-base"></i>
+                            <span>Adaptif dan tangkas terhadap teknologi ekosistem digital SIBERMU.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-muhammadiyah-accent text-base"></i>
+                            <span>Semangat gotong-royong dan saling mendukung sesama mahasiswa luar negeri.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISI & MISI SECTION -->
+    <section id="visi-misi" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-gold-light font-bold mb-2">Arah & Tujuan</h2>
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">Visi & Misi Strategis</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-gold-light to-cyber-light mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Vision Card (Full Width Highlight) -->
+            <div class="glass-card p-8 sm:p-10 rounded-3xl border border-gold-light/20 bg-gradient-to-r from-cyber-800 via-cyber-800 to-cyber-900 mb-12 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 text-gold-light/10 text-9xl font-black select-none pointer-events-none">
+                    VISI
+                </div>
+                <div class="relative z-10 max-w-4xl">
+                    <span class="px-3 py-1 rounded-md bg-gold/20 text-gold-light text-xs font-bold uppercase tracking-wider inline-block mb-3">Visi Utama</span>
+                    <h4 class="text-2xl sm:text-3xl font-extrabold text-white mb-4 leading-relaxed">
+                        "Menjadi wadah pembelajar mandiri, profesional, dan berdaya saing global yang mengintegrasikan ilmu manajemen modern dengan nilai-nilai Keislaman dan Kemuhammadiyahan tanpa terhalang batas geografis."
+                    </h4>
+                </div>
+            </div>
+
+            <!-- Mission Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Misi 1 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-cyber-light/10 text-cyber-light flex items-center justify-center text-xl font-bold mb-4">
+                            <i class="fa-solid fa-users-gear"></i>
+                        </div>
+                        <h5 class="text-lg font-bold text-white mb-2">Kolaboratif</h5>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            Membangun ikatan solidaritas dan kerja sama yang erat antar-mahasiswa PJJ di berbagai belahan negara.
+                        </p>
+                    </div>
+                    <span class="text-[10px] text-cyber-light font-semibold mt-4 block uppercase tracking-widest">Misi 01</span>
+                </div>
+
+                <!-- Misi 2 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-muhammadiyah/10 text-muhammadiyah-accent flex items-center justify-center text-xl font-bold mb-4">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <h5 class="text-lg font-bold text-white mb-2">Profesional</h5>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            Meningkatkan kompetensi kepemimpinan dan manajemen unggul untuk menunjang karir berskala internasional.
+                        </p>
+                    </div>
+                    <span class="text-[10px] text-muhammadiyah-accent font-semibold mt-4 block uppercase tracking-widest">Misi 02</span>
+                </div>
+
+                <!-- Misi 3 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gold/10 text-gold-light flex items-center justify-center text-xl font-bold mb-4">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h5 class="text-lg font-bold text-white mb-2">Inovatif</h5>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            Memanfaatkan teknologi digital modern secara optimal dalam proses akademik, riset, dan dinamika organisasi.
+                        </p>
+                    </div>
+                    <span class="text-[10px] text-gold-light font-semibold mt-4 block uppercase tracking-widest">Misi 03</span>
+                </div>
+
+                <!-- Misi 4 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold mb-4">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </div>
+                        <h5 class="text-lg font-bold text-white mb-2">Inklusif</h5>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            Saling mendukung dalam menghadapi tantangan studi PJJ bagi para pekerja dan profesional di luar negeri.
+                        </p>
+                    </div>
+                    <span class="text-[10px] text-purple-400 font-semibold mt-4 block uppercase tracking-widest">Misi 04</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NILAI UTAMA (S.I.B.E.R) SECTION -->
+    <section id="nilai" class="py-20 relative bg-cyber-800/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-muhammadiyah-accent font-bold mb-2">Landasan Karakter</h2>
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">Nilai-Nilai Utama "S.I.B.E.R"</h3>
+                <p class="text-slate-400 text-sm mt-3">Prinsip dasar yang menjiwai setiap langkah mahasiswa Manajemen 11 PJJ Luar Negeri.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-muhammadiyah to-cyber-light mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <!-- S - Synergy -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border-t-4 border-t-cyber-light text-center">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-cyber-light/10 text-cyber-light flex items-center justify-center text-2xl font-black mb-4">
+                        S
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-1">Synergy</h4>
+                    <span class="text-xs text-cyber-light font-semibold block mb-3">Sinergi</span>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Bekerja sama bahu-membahu mengatasi tantangan perbedaan zona waktu dan jarak geografis.
+                    </p>
+                </div>
+
+                <!-- I - Integrity -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border-t-4 border-t-muhammadiyah text-center">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-muhammadiyah/10 text-muhammadiyah-accent flex items-center justify-center text-2xl font-black mb-4">
+                        I
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-1">Integrity</h4>
+                    <span class="text-xs text-muhammadiyah-accent font-semibold block mb-3">Integritas</span>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Menjunjung tinggi kejujuran akademik, etika moral, dan profesionalisme di mana pun berada.
+                    </p>
+                </div>
+
+                <!-- B - Boundless -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border-t-4 border-t-gold text-center">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-gold/10 text-gold-light flex items-center justify-center text-2xl font-black mb-4">
+                        B
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-1">Boundless</h4>
+                    <span class="text-xs text-gold-light font-semibold block mb-3">Tanpa Batas</span>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Semangat belajar terus menerus tanpa terhalang batas ruang, waktu, dan sekat negara.
+                    </p>
+                </div>
+
+                <!-- E - Excellence -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border-t-4 border-t-sky-400 text-center">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-sky-400/10 text-sky-400 flex items-center justify-center text-2xl font-black mb-4">
+                        E
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-1">Excellence</h4>
+                    <span class="text-xs text-sky-400 font-semibold block mb-3">Keunggulan</span>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Berkomitmen menghasilkan karya riset, tugas, dan prestasi belajar terbaik.
+                    </p>
+                </div>
+
+                <!-- R - Respect -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl border-t-4 border-t-emerald-400 text-center">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-emerald-400/10 text-emerald-400 flex items-center justify-center text-2xl font-black mb-4">
+                        R
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-1">Respect</h4>
+                    <span class="text-xs text-emerald-400 font-semibold block mb-3">Saling Menghargai</span>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Saling menghargai dan mendukung latar belakang serta profesi setiap anggota kelas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEMOGRAFI & SEBARAN GLOBAL SECTION -->
+    <section id="demografi" class="py-20 relative bg-dots-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-cyber-light font-bold mb-2">Sebaran Wilayah</h2>
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">Jangkauan Mahasiswa Global</h3>
+                <p class="text-slate-400 text-sm mt-2">Terhubung dari berbagai kawasan benua untuk satu tujuan pembelajaran.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-cyber-light to-gold-light mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Regional Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Regional 1: Asia & Asia Tenggara -->
+                <div class="glass-card p-6 rounded-2xl relative overflow-hidden border border-white/10 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-cyber-light uppercase tracking-wider">Kawasan 01</span>
+                        <i class="fa-solid fa-earth-asia text-3xl text-cyber-light/40 group-hover:text-cyber-light transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Asia & Asia Tenggara</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Jepang, Korea Selatan, Taiwan, Singapura, Malaysia, Hong Kong, dan sekitarnya.
+                    </p>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-cyber-light h-full w-4/5 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Regional 2: Timur Tengah -->
+                <div class="glass-card p-6 rounded-2xl relative overflow-hidden border border-white/10 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-gold-light uppercase tracking-wider">Kawasan 02</span>
+                        <i class="fa-solid fa-mosque text-3xl text-gold-light/40 group-hover:text-gold-light transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Timur Tengah</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Arab Saudi, Uni Emirat Arab (UEA), Qatar, Kuwait, Oman, dan wilayah sekitarnya.
+                    </p>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-gold-light h-full w-3/4 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Regional 3: Eropa -->
+                <div class="glass-card p-6 rounded-2xl relative overflow-hidden border border-white/10 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-muhammadiyah-accent uppercase tracking-wider">Kawasan 03</span>
+                        <i class="fa-solid fa-earth-europe text-3xl text-muhammadiyah-accent/40 group-hover:text-muhammadiyah-accent transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Eropa</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Inggris, Jerman, Belanda, Turki, dan negara-negara Uni Eropa lainnya.
+                    </p>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-muhammadiyah-accent h-full w-2/3 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Regional 4: Amerika & Lainnya -->
+                <div class="glass-card p-6 rounded-2xl relative overflow-hidden border border-white/10 group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Kawasan 04</span>
+                        <i class="fa-solid fa-earth-americas text-3xl text-purple-400/40 group-hover:text-purple-400 transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Amerika & Global</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Amerika Serikat, Kanada, Australia, serta wilayah profesional global lainnya.
+                    </p>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-purple-400 h-full w-1/2 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SALURAN KOMUNIKASI & KANAL RESMI SECTION -->
+    <section id="kanal" class="py-20 relative bg-cyber-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-cyber-light font-bold mb-2">Pusat Interaksi</h2>
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">Saluran Komunikasi & Kanal Resmi</h3>
+                <p class="text-slate-400 text-sm mt-2">Tetap terhubung dengan akademik dan rekan sejawat melalui jejaring resmi.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-cyber-light to-muhammadiyah mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Platform 1: LMS SIBERMU -->
+                <div class="glass-card p-8 rounded-3xl border border-cyber-light/30 flex flex-col justify-between hover:border-cyber-light transition-all">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-cyber-light/10 text-cyber-light flex items-center justify-center text-3xl mb-6">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2">LMS SIBERMU</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                            Platform utama perkuliahan, penyampaian materi, penyerahan tugas, diskusi akademik, dan perkuliahan interaktif.
+                        </p>
+                    </div>
+                    <a href="https://lms.sibermu.ac.id" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-cyber-light text-cyber-900 font-bold text-center text-sm hover:bg-white transition-colors block">
+                        Akses LMS Resmi <i class="fa-solid fa-external-link ml-1 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Platform 2: WhatsApp / Telegram Group -->
+                <div class="glass-card p-8 rounded-3xl border border-emerald-500/30 flex flex-col justify-between hover:border-emerald-500 transition-all">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-3xl mb-6">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2">Grup Komunikasi Kelas</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                            Kanal Telegram / WhatsApp internal Manajemen 11 Luar Negeri untuk koordinasi cepat, pengumuman, dan diskusi informal.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Grup Komunikasi', 'Silakan hubungi pengurus kelas atau ketua angkatan untuk verifikasi identitas mahasiswa sebelum bergabung ke dalam grup internal WhatsApp/Telegram.')" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-center text-sm hover:bg-emerald-500 transition-colors">
+                        Gabung Grup Kelas
+                    </button>
+                </div>
+
+                <!-- Platform 3: Social Media (Instagram / LinkedIn) -->
+                <div class="glass-card p-8 rounded-3xl border border-pink-500/30 flex flex-col justify-between hover:border-pink-500 transition-all">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-3xl mb-6">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-2">Media Sosial Komunitas</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                            Kanal Instagram & LinkedIn resmi untuk publikasi kegiatan, insight manajemen, dan networking mahasiswa PJJ.
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="openModal('Instagram Kelas', 'Akun Instagram Komunitas Manajemen 11 Luar Negeri dapat diakses melalui pengurus kelas.')" class="flex-1 py-3 rounded-xl bg-slate-800 text-white font-bold text-center text-xs hover:bg-slate-700 transition-colors">
+                            Instagram
+                        </button>
+                        <button onclick="openModal('LinkedIn Network', 'Jejaring profesional LinkedIn Manajemen 11 SIBERMU dikelola secara kolaboratif.')" class="flex-1 py-3 rounded-xl bg-slate-800 text-white font-bold text-center text-xs hover:bg-slate-700 transition-colors">
+                            LinkedIn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="bg-cyber-900 border-t border-slate-800/80 py-8 text-slate-400 text-xs w-full">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Brand Info -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-muhammadiyah-dark to-cyber-light flex items-center justify-center font-bold text-white text-sm">
+                            M11
+                        </div>
+                        <span class="text-lg font-extrabold text-white tracking-wider">
+                            SIBERMU <span class="text-muhammadiyah-accent">MANAJEMEN 11</span>
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-md leading-relaxed mb-4">
+                        Komunitas Akademik Pembelajaran Jarak Jauh (PJJ) Luar Negeri - S1 Manajemen Universitas Siber Muhammadiyah. Membawa integritas dan visi global tanpa batas geografis.
+                    </p>
+                    <p class="text-xs text-gold-light italic">
+                        "Global Vision, Unlimited Boundaries, Muhammadiyah Values."
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Navigasi</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#tentang" class="hover:text-cyber-light transition-colors">Tentang Kami</a></li>
+                        <li><a href="#visi-misi" class="hover:text-cyber-light transition-colors">Visi & Misi</a></li>
+                        <li><a href="#nilai" class="hover:text-cyber-light transition-colors">Nilai S.I.B.E.R</a></li>
+                        <li><a href="#demografi" class="hover:text-cyber-light transition-colors">Profil Anggota</a></li>
+                    </ul>
+                </div>
+
+                <!-- Academic Links -->
+                <div>
+                    <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Tautan Penting</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="https://sibermu.ac.id" target="_blank" rel="noopener" class="hover:text-cyber-light transition-colors">Website SIBERMU</a></li>
+                        <li><a href="https://lms.sibermu.ac.id" target="_blank" rel="noopener" class="hover:text-cyber-light transition-colors">LMS SIBERMU Portal</a></li>
+                        <li><a href="#kanal" class="hover:text-cyber-light transition-colors">Kontak Pengurus</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <p>&copy; 2026 MANAJEMEN 11 SIBERMU PJJ Luar Negeri. Hak Cipta Dilindungi.</p>
+                <div class="flex gap-4">
+                    <span class="hover:text-slate-300">S1 Manajemen</span>
+                    <span>&bull;</span>
+                    <span class="hover:text-slate-300">PJJ Luar Negeri</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal Dialog -->
+    <div id="infoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-card max-w-md w-full p-6 rounded-3xl border border-cyber-light/30 shadow-2xl relative animate-fade-in">
+            <h4 id="modalTitle" class="text-xl font-bold text-white mb-3">Informasi</h4>
+            <p id="modalMessage" class="text-slate-300 text-sm leading-relaxed mb-6"></p>
+            <div class="flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-cyber-light text-cyber-900 font-bold text-sm hover:bg-white transition-colors">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JS (inlined so the page works standalone without assets/js/main.js) -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobileMenu a').forEach((a) => {
+            a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Navbar background state on scroll
+        const navbar = document.getElementById('navbar');
+        function handleNavScroll() {
+            if (window.scrollY > 20) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        }
+        window.addEventListener('scroll', handleNavScroll);
+        handleNavScroll();
+
+        // Animated counters (run once each becomes visible)
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.dataset.target, 10) || 0;
+                const step = Math.max(1, Math.ceil(target / 40));
+                let current = 0;
+                const tick = () => {
+                    current += step;
+                    if (current >= target) {
+                        el.textContent = target;
+                    } else {
+                        el.textContent = current;
+                        requestAnimationFrame(() => setTimeout(tick, 20));
+                    }
+                };
+                tick();
+                counterObserver.unobserve(el);
+            });
+        }, { threshold: 0.4 });
+        counters.forEach((c) => counterObserver.observe(c));
+
+        // Info modal
+        function openModal(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            const modal = document.getElementById('infoModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeModal() {
+            const modal = document.getElementById('infoModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        document.getElementById('infoModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'infoModal') closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Lightweight, responsive particle background for the hero canvas
+        (function () {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let width = 0;
+            let height = 0;
+
+            function resize() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                width = canvas.width = rect.width;
+                height = canvas.height = rect.height;
+            }
+
+            function initParticles() {
+                const count = window.innerWidth < 640 ? 28 : 55;
+                particles = Array.from({ length: count }, () => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    r: Math.random() * 1.4 + 0.6
+                }));
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = 'rgba(0, 229, 255, 0.55)';
+                particles.forEach((p) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            resize();
+            initParticles();
+            animate();
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    resize();
+                    initParticles();
+                }, 200);
+            });
+        })();
+
+        // Smooth-close mobile menu when resizing up to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) mobileMenu.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
